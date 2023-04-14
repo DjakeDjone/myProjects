@@ -5,8 +5,8 @@ export default defineComponent({
   data() {
     return {
       folded: false,
-      color1: 'rgba(70, 208, 252, 1)',
-      color2: 'rgba(75, 88, 255, 1)', // background
+      color1: 'rgba(59, 208, 110, 1)',
+      color2: 'rgba(59, 88, 110, 1)', // background
       color3: '',
       color4: '',
     };
@@ -17,10 +17,15 @@ export default defineComponent({
       // console.log(e.clientX, e.clientY);
       this.mouseGradient(e.clientX, e.clientY);
     });
-    this.changeColorsRandom()
-    page.onclick = () => {
-      this.changeColorsRandom()
-    }
+    this.changeColors(
+      this.color1,
+      this.color2,
+    )
+    // page.onclick = () => {
+    //   this.changeColorsRandom()
+    //   console.log(this.color1, this.color2);
+    //   // rgba(59, 208, 110, 1) rgba(59, 88, 110, 1)
+    // }
   },
   methods: {
     mouseGradient(x: number, y: number) {
@@ -29,9 +34,6 @@ export default defineComponent({
       const yValue = y / window.innerHeight * 100;
       page.style.setProperty('--x', xValue.toString() + '%');
       page.style.setProperty('--y', yValue.toString() + '%');
-      // page.style.background = `radial-gradient(circle at ${xValue * 100}% ${
-      //   yValue * 100
-      //   }%, var(--fg) 0%, var(--bg) 100%)`;
     },
     menuFolder() {
       const nav = document.querySelector('nav') as HTMLElement;
@@ -72,19 +74,25 @@ export default defineComponent({
     <nav class="close">
       <nuxt-icon name="menu" @click="menuFolder()" id="menuIcon" />
       <ul v-if="folded">
-        <li @click="changeColorsRandom()">
-          <RouterLink to="/">Home</RouterLink>
+        <li>
+          <!-- <RouterLink to="/">Home</RouterLink> -->
+          <NuxtLink to="/">Home</NuxtLink>
         </li>
-        <li @click="changeColorsRandom()">
-          <RouterLink to="/glider">Glider</RouterLink>
+        <li>
+          <!-- <RouterLink to="/glider">Glider</RouterLink> -->
+          <NuxtLink to="/glider">Glider</NuxtLink>
         </li>
-        <li @click="changeColorsRandom()">
-          <RouterLink to="/projects">Projects</RouterLink>
+        <li>
+          <!-- <RouterLink to="/projects">Projects</RouterLink> -->
+          <NuxtLink to="/projects">Projects</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="/randomColors">Background Generator</NuxtLink>
         </li>
       </ul>
     </nav>
     <div id="page" @click="closeMenuFolder()">
-      <RouterView />
+      <NuxtPage />
     </div>
     <footer>
       <p>Footer</p>
@@ -139,16 +147,9 @@ export default defineComponent({
   inherits: false;
 }
 
-@property --x {
-  syntax: '<percentage>';
-  initial-value: 50%;
-  inherits: false;
-}
-
-@property --y {
-  syntax: '<percentage>';
-  initial-value: 50%;
-  inherits: false;
+:root {
+  --x: 50%;
+  --y: 50%;
 }
 
 #page {
@@ -159,7 +160,8 @@ export default defineComponent({
   background: radial-gradient(circle at var(--x) var(--y),
       var(--fg) 0%,
       var(--bg) 100%);
-  transition: all 1s ease-in-out;
+  transition-property: --fg, --bg, --x, --y;
+  transition-duration: 1s, 1s, 0s, 0s;
 }
 
 #page main {
