@@ -10,13 +10,20 @@ export default defineComponent({
     },
     data() {
         return {
-            username: '',
-            password: '',
+            showPassw: false,
         };
     },
     methods: {
         login() {
-            this.userstore.session(this.username, this.password);
+            this.userstore.session();
+        },
+        showPassword() {
+            this.showPassw = !this.showPassw;
+            if (this.showPassw) {
+                (document.getElementById('password') as HTMLInputElement).type = 'text';
+            } else {
+                (document.getElementById('password') as HTMLInputElement).type = 'password';
+            }
         },
     },
 });
@@ -24,19 +31,27 @@ export default defineComponent({
 
 <template>
     <main>
-        <form @submit="login()">
+        <form @submit.prevent="login()" v-if="!userstore.loggedIn">
             <h1>Login</h1>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username">
+                <input v-model="userstore.username" type="text" class="form-control" id="username" placeholder="Username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <div class="form-control">
+                    <input v-model="userstore.password" type="password" id="password" placeholder="Password">
+                    <NuxtIcon v-if="showPassw" name="eye" @click="showPassword()"/>
+                        <NuxtIcon v-else name="eyeClosed" @click="showPassword()"/>
+                </div>
             </div>
-            <button type="submit" class="submit">Submit</button>
+            <button type="submit" class="submit"><span>Submit</span></button>
             <RouterLink to="/register">New at fri3dl.com?</RouterLink>
         </form>
+        <div v-else>
+            <h1>Welcome {{ userstore.username }}</h1>
+            <button @click="userstore.logout()">Logout</button>
+        </div>
     </main>
 </template>
 
@@ -61,8 +76,11 @@ form * {
     width: 100%;
     border: none;
 }
-input {
+.form-control {
     text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     margin: 0.5rem 0;
     margin-top: 0;
@@ -70,10 +88,34 @@ input {
     padding: 0.5rem;
     border: none;
 }
-input:focus {
+.form-control span {
+    width: 1rem;
+}
+input {
+    background-color: transparent;
+    color: #fff;
+    text-align: left;
+}
+.form-control > * {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+}
+.form-control:hover {
+    background-color: #00000043;
+}
+
+.form-control:focus,
+.form-control:active {
     outline: none;
     border-bottom: 1px solid #fff;
+    border-radius: 0 1rem 0 0;
 }
+input:active,
+input:focus {
+    outline: none;
+}
+
 .form-group {
     text-align: left;
 }
@@ -91,9 +133,17 @@ input:focus {
     background-color: #00000043;
     scale: 1.1;
 }
-.submit:focus,
 .submit:active {
     outline: none;
+    transform: rotateX(180deg);
     scale: .8;
+}
+.submit:active span {
+    transform: rotateX(-180deg);
+}
+.nuxt-icon {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
 }
 </style>

@@ -12,14 +12,20 @@ export default defineComponent({
     },
     data() {
         return {
-            email: '',
-            username: '',
-            password: '',
+            showPassw: false,
         };
     },
     methods: {
         register() {
-            this.userstore.register(this.email, this.username, this.password);
+            this.userstore.register();
+        },
+        showPassword() {
+            this.showPassw = !this.showPassw;
+            if (this.showPassw) {
+                (document.getElementById('password') as HTMLInputElement).type = 'text';
+            } else {
+                (document.getElementById('password') as HTMLInputElement).type = 'password';
+            }
         },
     },
 });
@@ -28,19 +34,24 @@ export default defineComponent({
 
 <template>
     <main>
-        <form @submit="register()">
+        <form @submit.prevent="register()">
             <h1>Register</h1>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                <label for="user">Email</label>
+                <input v-model="userstore.email" type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                    placeholder="Enter email">
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="uname" placeholder="Username" />
+                <input v-model="userstore.username" type="text" id="uname" class="form-control" placeholder="Username" />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Password" />
+                <div class="form-control">
+                    <input v-model="userstore.password" type="password" id="password" placeholder="Password" />
+                    <NuxtIcon v-if="showPassw" name="eye" @click="showPassword()"/>
+                    <NuxtIcon v-else name="eyeClosed" @click="showPassword()"/>
+                </div>
             </div>
             <button class="submit">register</button>
             <RouterLink to="login">Already have an account?</RouterLink>
@@ -53,6 +64,10 @@ main {
     display: flex;
     align-items: center;
     height: 100vh;
+}
+
+a {
+    margin-top: 1rem;
 }
 
 form {
@@ -72,26 +87,43 @@ form * {
     border: none;
 }
 
-input {
+.form-control {
     text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     margin: 0.5rem 0;
     margin-top: 0;
     background-color: #0000009c;
     padding: 0.5rem;
     border: none;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
-input:hover {
+.form-control span {
+    width: 1rem;
+}
+
+input {
+    background-color: transparent;
+    color: #fff;
+    text-align: left;
+}
+
+.form-control:hover {
     background-color: #00000043;
 }
 
-input:focus,
-input:active {
+.form-control:focus,
+.form-control:active {
     outline: none;
     border-bottom: 1px solid #fff;
     border-radius: 0 1rem 0 0;
+}
+
+input:active,
+input:focus {
+    outline: none;
 }
 
 .form-group {
@@ -118,9 +150,14 @@ input:active {
     border-radius: 0 1rem 0 1rem;
 }
 
-.submit:focus,
+
 .submit:active {
     outline: none;
     scale: 0.9;
+}
+.nuxt-icon {
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
 }
 </style>

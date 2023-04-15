@@ -1,3 +1,25 @@
+<script setup lang="ts">
+definePageMeta({
+    title: 'Projects',
+    description: 'This is the projects page. It\'s made to preview my projects.',
+    keywords: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node, myProjects, myprojects',
+    _transitionIdx: 2,
+    pageTransition: {
+        name: 'down',
+        mode: 'out-in',
+    },
+    middleware(to, from) {
+        if (!to.meta.pageTransition || (typeof to.meta.pageTransition === 'boolean')) return;
+        if (typeof to.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+        to.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+
+        if (!from.meta.pageTransition || (typeof from.meta.pageTransition === 'boolean')) return;
+        if (typeof from.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+        from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+    }
+})
+</script>
+
 <template>
     <main>
         <h1>Projects</h1>
@@ -6,7 +28,6 @@
         </h2>
         <ul>
             <li>
-                <ion-icon></ion-icon>
                 <a href="https://fri3dl.com/projects/todo/" target="_blank">Todo-list</a>
                 <p>This is a page to manage and organize your todos! I made it for school</p>
             </li>

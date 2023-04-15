@@ -7,6 +7,27 @@ export default defineComponent({
             color2: 'rgba(0, 88, 110, 1)', // background
         };
     },
+    setup() {
+        definePageMeta({
+            title: 'Home',
+            description: 'Page to generate random colors for a radial gradient.',
+            keywords: 'random, colors, radial, gradient',
+            _transitionIdx: 3,
+            pageTransition: {
+                name: 'down',
+                mode: 'out-in',
+            },
+            middleware(to, from) {
+                if (!to.meta.pageTransition || (typeof to.meta.pageTransition === 'boolean')) return;
+                if (typeof to.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+                to.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+
+                if (!from.meta.pageTransition || (typeof from.meta.pageTransition === 'boolean')) return;
+                if (typeof from.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+                from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+            }
+        })
+    },
     mounted() {
         const page = document.getElementById('page') as HTMLElement;
         const randomColorsMain = document.getElementById('background') as HTMLElement;
@@ -91,7 +112,9 @@ button:hover {
 button:active {
     scale: 0.6;
     /* turn the button up to 90deg */
-    transform: rotate(360deg);
+    transform: rotateZ(-360deg);
+    /* transition the transform to look smooth */
+    /* transition: transform 0.9s; */
     /* padding: 0.5rem; */
 }
 #gradient {

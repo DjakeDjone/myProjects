@@ -109,9 +109,14 @@ export default defineComponent({
         <p>benjamin.friedl.f@gmx.at</p>
       </NuxtLink>
     </footer>
-    <div class="errorMsg msg" v-for="msg in messagestore.errorMsg">
-    </div>
-    <div class="successMsg msg" v-for="msg in messagestore.successMsg">
+    <div id="errorFeld">
+      <TransitionGroup name="list" tag="ul">
+        <li v-for="msg in messagestore.messages" :key="msg.id">
+          <Message>
+            {{ msg.content }}
+          </Message>
+        </li>
+      </TransitionGroup>
     </div>
   </div>
 </template>
@@ -128,17 +133,55 @@ export default defineComponent({
   color: #ffffffb3;
   scrollbar-width: thin;
 }
+.up-enter-active,
+.up-leave-active,
+.down-enter-active,
+.down-leave-active {
+  transition: all 0.3s;
+}
+.up-enter-from {
+  opacity: 0;
+  transform: translate(0, 3rem);
+}
+.up-leave-to {
+  opacity: 0;
+  transform: translate(0, -3rem);
+}
+.down-enter-from {
+  opacity: 0;
+  transform: translate(0, -3rem);
+}
+.down-leave-to {
+  opacity: 0;
+  transform: translate(0, 3rem);
+}
+#errorFeld {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-left: 1rem;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 
 *::-webkit-scrollbar {
   width: 0.5rem;
 }
+
 .noEffect {
   text-decoration: none;
 }
+
 .noEffect::after {
   content: none !important;
   width: 0 !important;
 }
+
 .noEffect a:hover::after,
 .noEffect a:focus::after {
   opacity: 0;
@@ -255,51 +298,51 @@ footer {
   /* width: 100vw; */
   position: relative;
 }
+
 /* Underline styles */
 h1 {
-    display: block;
-    position: relative;
-    padding: 0.2rem 0;
+  display: block;
+  position: relative;
+  padding: 0.2rem 0;
 }
 
 /* Fade in */
 h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 0.1rem;
-    background-color: rgba(255, 255, 255, 0.671);
-    opacity: 0;
-    transition: opacity 300ms, transform 300ms;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.1rem;
+  background-color: rgba(255, 255, 255, 0.671);
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
 }
 
 h1:hover::after,
 h1:focus::after {
-    opacity: 1;
-    transform: translate3d(0, 0.2em, 0);
+  opacity: 1;
+  transform: translate3d(0, 0.2em, 0);
 }
 
 
 
 h1::after,
 h1:focus::after {
-    transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 }
 
 /* Scale from center */
 h1::after {
-    opacity: 1;
-    transform: scale(0);
-    transform-origin: center;
+  opacity: 1;
+  transform: scale(0);
+  transform-origin: center;
 }
 
 h1:hover::after,
 h1:focus::after {
-    transform: scale(1);
+  transform: scale(1);
 }
-
 </style>
 
 <style scoped>
@@ -423,6 +466,11 @@ a::after {
   transform: translate3d(-100%, 0, 0);
 }
 
+@media screen and (max-width: 768px) {
+  #errorFeld {
+    align-items: flex-end;
+  }
+}
 @keyframes OpacityAni {
   0% {
     opacity: 0;
@@ -448,5 +496,33 @@ a::after {
     padding: 0.5rem;
     padding-top: 3rem;
   }
+}
+</style>
+<style scoped>
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.list-move,
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
 }
 </style>

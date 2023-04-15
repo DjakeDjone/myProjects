@@ -1,3 +1,23 @@
+<script lang="ts" setup>
+// definePageMeta({
+//     title: 'About me',
+//     description: 'About me',
+//     keywords: 'About me',
+//     url: 'about',
+//     type: 'website',
+//     locale: 'en_US',
+//     og: {
+//         site_name: 'fri3dl.com',
+//         type: 'website',
+//         locale: 'en_US',
+//         url: 'https://fri3dl.com/about',
+//         title: 'About me',
+//         description: 'About me',
+//     },
+//     _transitionIdx: 1,
+// });
+</script>
+
 <template>
     <main>
         <h1>About me</h1>

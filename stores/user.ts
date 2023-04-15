@@ -1,47 +1,92 @@
 import { defineStore } from "pinia";
+import { useMessagestore } from "./msg";
 
 export const useUserstore = defineStore({
     id: "user",
     state: () => ({
         loggedIn: false,
-        username: "benjamin",
-        password: "123456",
-        email: "benji@gmx.at",
+        username: useCookie("username") || "",
+        password: useCookie("password") || "",
+        email: useCookie("email") || "",
         token: "",
-        API_URL: "http://localhost:3300/api",
+        API_Base: useRuntimeConfig().public.API_Base,
     }),
     actions: {
-        async session(username: String, password: String) {
-            const data = await useFetch(this.API_URL + "/session", {
+        logout() {
+            this.loggedIn = false;
+            this.username = "";
+            this.password = "";
+            this.email = "";
+            this.token = "";
+            useMessagestore().throwInfo("Logged out", 5000);
+        },
+        async session() {
+            if (this.username == "" || this.password == "") {
+                useMessagestore().throwError("Please enter your username and password", 5000);
+                return;
+            }
+            const data = await useFetch(this.API_Base + "/session", {
                 method: "POST",
                 body: {
-                    username: username,
-                    password: hashPassword(password),
+                    username: this.username,
+                    password: hashPassword(this.password as string) as unknown as string,
                 },
                 cache: "no-cache",
             });
             try {
                 let msg = JSON.parse(data.data.value as string);
+                if (msg==null) {
+                    useMessagestore().throwError("登录失败", 5000);
+                    return;
+                }
                 console.log(msg);
+                if (msg.success) {
+                    this.loggedIn = true;
+                    this.token = msg.token;
+                    // create a cookie
+                    
+
+                    useMessagestore().throwInfo("Login successful!", 5000);
+                } else {
+                    useMessagestore().throwError(msg.message, 5000);
+                }
             } catch (e) {
                 console.log(e);
             }
         },
-        async register(username: String, password: String, email: String) {
-            const data = await useFetch(this.API_URL + "", {
+        async register() {
+            const data = await useFetch(this.API_Base + "/register", {
                 method: "POST",
                 body: {
-                    name: username,
-                    password: password,
+                    username: this.username,
+                    password: hashPassword(this.password as string) as unknown as string,
+                    email: this.email,
                 },
                 cache: "no-cache",
             });
+            try {
+                let msg = JSON.parse(data.data.value as string);
+                if (msg.success) {
+                    this.loggedIn = true;
+                    this.token = msg.token;
+                    useMessagestore().throwInfo("successful created an account!", 5000);
+                    // create a cookie
+
+                } else {
+                    useMessagestore().throwError(msg.message, 5000);
+                }
+            } catch (e) {
+                console.log(e);
+                useMessagestore().throwError("注册失败", 5000);
+            }
         },
     },
 });
 
-function hashPassword(password: String) {
+function hashPassword(password: string) {
     let hash = 0;
+    console.log(password);
+    // if (password.length == 0) return hash;
     for (let i = 0; i < password.length; i++) {
         hash = password.charCodeAt(i) + ((hash << 5) - hash);
     }

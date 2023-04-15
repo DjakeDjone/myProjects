@@ -5,4 +5,9 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-icons',
     ],
+    runtimeConfig: {
+        public: {
+            API_Base: process.env.NODE_ENV === 'production' ? 'https://auth.fri3dl.com/api' : 'http://localhost:3300/api'
+        },
+    },
 })

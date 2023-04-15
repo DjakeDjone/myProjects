@@ -1,6 +1,7 @@
 import { Pinia } from "pinia";
 import { defineStore } from "pinia";
 import { useMessagestore } from "./msg";
+import { useUserstore } from "./user";
 
 type comment = {
     id: number,
@@ -13,7 +14,7 @@ export const useBlogStore = defineStore({
     state: () => ({
         blog: {},
         comments: [] as comment[],
-        API_Base: "http://localhost:3300/api",
+        API_Base: useRuntimeConfig().public.API_Base,
         comment: {
             name: "",
             content: "",
@@ -43,9 +44,6 @@ export const useBlogStore = defineStore({
         async getBlog() {
             const data = await useFetch(this.API_Base + "/blog/Glider", {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
             });
             try {
                 console.log(data.data.value);
@@ -63,9 +61,6 @@ export const useBlogStore = defineStore({
             }
             const data = await useFetch(this.API_Base + "/blog/Glider/comment", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
                 body: JSON.stringify(this.comment)
             });
             try {
