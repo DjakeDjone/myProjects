@@ -29,6 +29,7 @@ export default defineComponent({
 <template>
     <main>
         <form @submit="register()">
+            <h1>Register</h1>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -42,6 +43,7 @@ export default defineComponent({
                 <input type="password" id="password" placeholder="Password" />
             </div>
             <button class="submit">register</button>
+            <RouterLink to="login">Already have an account?</RouterLink>
         </form>
     </main>
 </template>

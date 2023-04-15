@@ -255,6 +255,51 @@ footer {
   /* width: 100vw; */
   position: relative;
 }
+/* Underline styles */
+h1 {
+    display: block;
+    position: relative;
+    padding: 0.2rem 0;
+}
+
+/* Fade in */
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1rem;
+    background-color: rgba(255, 255, 255, 0.671);
+    opacity: 0;
+    transition: opacity 300ms, transform 300ms;
+}
+
+h1:hover::after,
+h1:focus::after {
+    opacity: 1;
+    transform: translate3d(0, 0.2em, 0);
+}
+
+
+
+h1::after,
+h1:focus::after {
+    transform: translate3d(0, 0, 0);
+}
+
+/* Scale from center */
+h1::after {
+    opacity: 1;
+    transform: scale(0);
+    transform-origin: center;
+}
+
+h1:hover::after,
+h1:focus::after {
+    transform: scale(1);
+}
+
 </style>
 
 <style scoped>

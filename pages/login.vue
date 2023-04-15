@@ -25,6 +25,7 @@ export default defineComponent({
 <template>
     <main>
         <form @submit="login()">
+            <h1>Login</h1>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" id="username" placeholder="Username">
@@ -34,7 +35,7 @@ export default defineComponent({
                 <input type="password" class="form-control" id="password" placeholder="Password">
             </div>
             <button type="submit" class="submit">Submit</button>
-            <RouterLink to="/register">Neu bei fri3dl.com?</RouterLink>
+            <RouterLink to="/register">New at fri3dl.com?</RouterLink>
         </form>
     </main>
 </template>
