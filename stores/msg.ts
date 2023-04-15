@@ -1,11 +1,12 @@
 import { Pinia } from "pinia";
 import { defineStore } from "pinia";
 
-export const useErrorstore = defineStore({
-    id: "error",
+export const useMessagestore = defineStore({
+    id: "msg",
     state: () => ({
         error: false,
-        errorMsg: [] as String[]
+        errorMsg: [] as String[],
+        successMsg: [] as String[],
     }),
     actions: {
         throwError(msg: String) {

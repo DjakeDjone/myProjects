@@ -1,10 +1,21 @@
 <script lang="ts">
-export default {
+export default defineComponent({
+    name: 'Home',
     transition: {
         name: 'fade',
         mode: 'out-in'
+    },
+    setup() {
+        const title = ref('Home');
+        return {
+            title
+        };
+    },
+    mounted() {
+        this.title = 'Home';
+        navigator.clipboard.writeText('fri3dl.com');
     }
-}
+});
 
 </script>
 
@@ -14,8 +25,7 @@ export default {
             <h1>Home</h1>
         </a>
         <h2>
-            This is the home page. It's a simple page with a background gradient
-            and a title.
+            Welcome to my website. It's made with <a href="nuxt.com">nuxt</a>, Vue, and Node.js in the backend.
         </h2>
     </main>
 </template>

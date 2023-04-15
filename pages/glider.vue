@@ -1,14 +1,14 @@
 <script lang="ts">
-import { useErrorstore } from '../stores/error'
 import { useBlogStore } from '../stores/blog'
+import { useMessagestore } from '~/stores/msg'
 export default defineComponent({
     name: 'Glider',
     setup() {
-        const errorstore = useErrorstore()
         const blogstore = useBlogStore()
+        const msg = useMessagestore()
         return {
-            errorstore,
-            blogstore
+            blogstore,
+            msg,
         }
     },
     mounted() {
@@ -23,7 +23,7 @@ export default defineComponent({
                 const commentInput = document.getElementById('commentInput') as HTMLInputElement;
                 commentInput.value = ''
             } catch (error) {
-                this.errorstore.throwError(error as string)
+                this.msg.throwError(error as string);
             }
         }
     },

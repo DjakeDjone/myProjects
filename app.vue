@@ -1,7 +1,16 @@
 <script lang="ts">
-
+import { useMessagestore } from './stores/msg';
+import { useUserstore } from './stores/user';
 export default defineComponent({
   name: 'App',
+  setup() {
+    const messagestore = useMessagestore();
+    const userstore = useUserstore();
+    return {
+      messagestore,
+      userstore,
+    };
+  },
   data() {
     return {
       folded: false,
@@ -12,8 +21,8 @@ export default defineComponent({
     };
   },
   mounted() {
-    const page = document.getElementById('page') as HTMLElement;
-    page.addEventListener('mousemove', (e) => {
+    const mainAll = document.getElementById('mainAll') as HTMLElement;
+    mainAll.addEventListener('mousemove', (e) => {
       // console.log(e.clientX, e.clientY);
       this.mouseGradient(e.clientX, e.clientY);
     });
@@ -21,30 +30,25 @@ export default defineComponent({
       this.color1,
       this.color2,
     )
-    // page.onclick = () => {
-    //   this.changeColorsRandom()
-    //   console.log(this.color1, this.color2);
-    //   // rgba(59, 208, 110, 1) rgba(59, 88, 110, 1)
-    // }
   },
   methods: {
     mouseGradient(x: number, y: number) {
-      const page = document.getElementById('page') as HTMLElement;
+      const page = document.getElementById('mainAll') as HTMLElement;
       const xValue = x / window.innerWidth * 100;
       const yValue = y / window.innerHeight * 100;
       page.style.setProperty('--x', xValue.toString() + '%');
       page.style.setProperty('--y', yValue.toString() + '%');
     },
     menuFolder() {
-      const nav = document.querySelector('nav') as HTMLElement;
-      const page = document.getElementById('page') as HTMLElement;
+      const leftNav = document.getElementById('leftNav') as HTMLElement;
+      const page = document.getElementById('mainAll') as HTMLElement;
       this.folded = !this.folded;
-      nav.classList.toggle('close');
-      nav.classList.toggle('open');
+      leftNav.classList.toggle('close');
+      leftNav.classList.toggle('open');
       page.classList.toggle('paddOn');
     },
     changeColors(color1: string, color2: string) {
-      const page = document.getElementById('page') as HTMLElement;
+      const page = document.getElementById('mainAll') as HTMLElement;
       page.style.setProperty('--fg', color1);
       page.style.setProperty('--bg', color2);
       this.color1 = color1;
@@ -56,12 +60,12 @@ export default defineComponent({
       this.changeColors(`rgba(${red}, 208, ${blue}, 1)`, `rgba(${red}, 88, ${blue}, 1)`);
     },
     closeMenuFolder() {
-      const nav = document.querySelector('nav') as HTMLElement;
+      const leftNav = document.getElementById('leftNav') as HTMLElement;
       const page = document.getElementById('page') as HTMLElement;
       if (this.folded) {
         this.folded = !this.folded;
-        nav.classList.toggle('close');
-        nav.classList.toggle('open');
+        leftNav.classList.toggle('close');
+        leftNav.classList.toggle('open');
         page.classList.toggle('paddOn');
       }
     },
@@ -71,23 +75,28 @@ export default defineComponent({
 
 <template>
   <div id="mainAll">
-    <nav class="close">
+    <div id="rightNav">
+      <NuxtLink to="/login" v-if="!userstore.loggedIn">Login
+        <NuxtIcon name="login" @click="" id="menuIcon" />
+      </NuxtLink>
+    </div>
+    <nav class="close" id="leftNav">
       <nuxt-icon name="menu" @click="menuFolder()" id="menuIcon" />
       <ul v-if="folded">
         <li>
           <!-- <RouterLink to="/">Home</RouterLink> -->
-          <NuxtLink to="/">Home</NuxtLink>
+          <NuxtLink class="underlineEffect" to="/">Home</NuxtLink>
         </li>
         <li>
           <!-- <RouterLink to="/glider">Glider</RouterLink> -->
-          <NuxtLink to="/glider">Glider</NuxtLink>
+          <NuxtLink class="underlineEffect" to="/glider">Glider</NuxtLink>
         </li>
         <li>
           <!-- <RouterLink to="/projects">Projects</RouterLink> -->
           <NuxtLink to="/projects">Projects</NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/randomColors">Background Generator</NuxtLink>
+          <NuxtLink to="/randomColors">generator</NuxtLink>
         </li>
       </ul>
     </nav>
@@ -95,8 +104,15 @@ export default defineComponent({
       <NuxtPage />
     </div>
     <footer>
-      <p>Footer</p>
+      <NuxtLink to="/about" class="noEffect">
+        <h3>© made by Benjamin Friedl</h3>
+        <p>benjamin.friedl.f@gmx.at</p>
+      </NuxtLink>
     </footer>
+    <div class="errorMsg msg" v-for="msg in messagestore.errorMsg">
+    </div>
+    <div class="successMsg msg" v-for="msg in messagestore.successMsg">
+    </div>
   </div>
 </template>
 
@@ -113,6 +129,59 @@ export default defineComponent({
   scrollbar-width: thin;
 }
 
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.noEffect {
+  text-decoration: none;
+}
+.noEffect::after {
+  content: none !important;
+  width: 0 !important;
+}
+.noEffect a:hover::after,
+.noEffect a:focus::after {
+  opacity: 0;
+  transform: none;
+}
+
+
+#rightNav {
+  backdrop-filter: blur(0.5rem);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+  padding-bottom: 0;
+  /* background: #1e211fd4; */
+  color: #fff;
+}
+
+#rightNav a {
+  text-decoration: none;
+}
+
+#rightNav #menuIcon {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+#rightNav #menuIcon:hover {
+  transition: all 0.3s ease-in-out;
+  color: #fff;
+  scale: 1.2;
+}
+
+#rightNav #menuIcon:active {
+  transition: all 0.3s ease-in-out;
+  color: #fff;
+  scale: 0.8;
+}
+
 #mainAll {
   display: flex;
   flex-direction: column;
@@ -127,6 +196,11 @@ export default defineComponent({
 }
 
 #page {
+  transition: all 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
   padding: 2rem;
   min-height: 100vh;
   background-size: 100% 100%;
@@ -150,9 +224,10 @@ export default defineComponent({
 :root {
   --x: 50%;
   --y: 50%;
+  --footerHeight: 0;
 }
 
-#page {
+#mainAll {
   --fg: #ffffff;
   --bg: #00ff91;
   --y: 50%;
@@ -160,32 +235,36 @@ export default defineComponent({
   background: radial-gradient(circle at var(--x) var(--y),
       var(--fg) 0%,
       var(--bg) 100%);
-  transition-property: --fg, --bg, --x, --y;
-  transition-duration: 1s, 1s, 0s, 0s;
+  /* transition-property: --fg, --bg, --x, --y;
+  transition-duration: 1s, 1s, 0s, 0s; */
+  transition: all 1s ease-in-out;
 }
 
 #page main {
-  /* padding-top: 2rem; */
-  /* padding: 0.5rem; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  /* min-height: 80vh; */
+  padding-top: 1rem;
+}
+
+footer {
+  background-color: #00000088;
+  padding: 1rem;
+  color: #ffffffb3;
+  /* margin-bottom: -1rem; */
+  /* width: 100vw; */
+  position: relative;
 }
 </style>
 
 <style scoped>
 .open {
   height: 100%;
+  backdrop-filter: blur(1rem);
 }
 
 #menuIcon {
   cursor: pointer;
-}
-
-.paddOn {
-  padding-left: 6rem !important;
 }
 
 .close {
@@ -324,4 +403,5 @@ a::after {
     padding: 0.5rem;
     padding-top: 3rem;
   }
-}</style>
+}
+</style>

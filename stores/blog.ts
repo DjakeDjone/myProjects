@@ -1,6 +1,6 @@
 import { Pinia } from "pinia";
 import { defineStore } from "pinia";
-import { useErrorstore } from "./error";
+import { useMessagestore } from "./msg";
 
 type comment = {
     id: number,
@@ -58,7 +58,7 @@ export const useBlogStore = defineStore({
         },
         async postComment() {
             if (this.comment.content == "") {
-                useErrorstore().throwError("评论不能为空");
+                useMessagestore().throwError("评论不能为空");
                 return;
             }
             const data = await useFetch(this.API_Base + "/blog/Glider/comment", {

@@ -14,28 +14,25 @@ export default defineComponent({
             this.color1,
             this.color2,
         )
-        randomColorsMain.onclick = () => {
-            this.changeColorsRandom()
-            console.log(this.color1, this.color2);
-        }
     },
     methods: {
         copyGradient() {
             const p = document.getElementById('gradient') as HTMLElement;
             console.log(p.innerHTML);
+            navigator.clipboard.writeText(p.innerHTML);
         },
         changeColors(color1: string, color2: string) {
-            const page = document.getElementById('page') as HTMLElement;
-            page.style.setProperty('--fg', color1);
-            page.style.setProperty('--bg', color2);
+            const mainAll = document.getElementById('mainAll') as HTMLElement;
+            mainAll.style.setProperty('--fg', color1);
+            mainAll.style.setProperty('--bg', color2);
             this.color1 = color1;
             this.color2 = color2;
         },
         mouseGradient(x: number, y: number) {
-            const page = document.getElementById('page') as HTMLElement;
+            const mainAll = document.getElementById('mainAll') as HTMLElement;
             const xValue = x / window.innerWidth * 100;
             const yValue = y / window.innerHeight * 100;
-            page.style.background = `radial-gradient(circle at ${xValue * 100}% ${yValue * 100}%, var(--fg) 0%, var(--bg) 100%)`;
+            mainAll.style.background = `radial-gradient(circle at ${xValue * 100}% ${yValue * 100}%, var(--fg) 0%, var(--bg) 100%)`;
         },
         changeColorsRandom() {
             const red = Math.floor(Math.random() * 255);
@@ -58,11 +55,74 @@ export default defineComponent({
 
 <template>
     <main>
-        <div id="background">
+        <div id="background" @click="changeColorsRandom()">
             <h1>This page generates random radial backgrounds</h1>
         </div>
-        <p id="gradient" @click="copyGradient()">radial-gradient(circle at {{ 50 }}% {{ 50 }}%, {{ color1 }} 0%, {{ color2 }} 100%)</p>
+        <div class="copyHtml">
+            <p id="gradient">radial-gradient(circle at {{ 50 }}% {{ 50 }}%, {{ color1 }} 0%, {{
+                color2 }} 100%)</p>
+            <NuxtIcon @click="copyGradient" class="copyIcon" name="copy" />
+        </div>
+        <button @click="changeColorsRandom()">generate</button>
     </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+main {
+    height: 100%;
+    transition: all 0.3s ease;
+}
+button {
+    background: var(--fg);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    color: var(--bg);
+    border: none;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+button:hover {
+    background: var(--bg);
+    color: var(--fg);
+}
+button:active {
+    scale: 0.6;
+    /* turn the button up to 90deg */
+    transform: rotate(360deg);
+    /* padding: 0.5rem; */
+}
+#gradient {
+    transition: all 0.3s ease;
+}
+.copyHtml {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    background-color: rgba(128, 128, 128, 0.319);
+    padding: 0.5rem;
+    border-radius: 0 0 0 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.copyIcon {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+.copyHtml:hover {
+    background: var(--fg);
+    color: var(--bg);
+}
+.copyHtml:hover .copyIcon {
+    transform: scale(1.2);
+}
+.copyIcon:active, .copyIcon:focus {
+    scale: 0.6;
+    /* padding: 0.5rem; */
+}
+</style>
