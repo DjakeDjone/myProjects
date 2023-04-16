@@ -28,16 +28,28 @@ definePageMeta({
         </h2>
         <ul>
             <li>
-                <a href="https://fri3dl.com/projects/todo/" target="_blank">Todo-list</a>
-                <p>This is a page to manage and organize your todos! I made it for school</p>
+                <a href="https://fri3dl.com/projects/todo/" target="_blank">    
+                    <h2>Todo-list</h2>
+                    <!-- <NuxtIcon name="logoB" /> -->
+                    <img src="../assets/icons/logoB.svg" alt="">
+                    <p>This is a page to manage and organize your todos! I made it for school</p>
+                </a>
             </li>
             <li>
-                <a href="https://fri3dl.com/projects/pizza" target="_blank">Pizza</a>
-                <p>This is a page to order pizza! I made it for school</p>
+                <a href="https://fri3dl.com/projects/pizza" target="_blank">
+                <h2>
+                    Pizza
+                </h2>
+                    <img src="../assets/icons/logoB.svg" alt="">
+                    <p>This is a page to order pizza! I made it for school</p>
+                </a>
             </li>
             <li>
-                <a href="https://chat.fri3dl.com/tabs/login" target="_blank">Chat-App</a>
-                <p>This is a page to chat. I made it just for fun!</p>
+                <a href="https://chat.fri3dl.com/tabs/login" target="_blank">
+                    <h2>Chat-App</h2>
+                    <img src="../assets/icons/logoB.svg" alt="">
+                    <p>This is a page to chat. I made it just for fun!</p>
+                </a>
             </li>
         </ul>
     </main>
@@ -77,15 +89,53 @@ ul {
     /* box-shadow: 0 0 0.5rem #fcfcfc; */
 }
 
-li {
+li a {
     margin: 1rem;
     max-height: 80%;
     padding: 1rem;
     background-color: rgba(0, 0, 0, 0.157);
     box-shadow: 0 0 0.5rem #000000;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 3fr;
+    grid-template-areas: "img title" "img desc";
+    border-radius: 0.5rem;
+    overflow: hidden;
+    /* its to height */
+    height: 100%;
 }
-
-li:hover {
+li a img {
+    transition: transform .5s ease;
+    grid-area: img;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 0.5rem;
+}
+li a p {
+    grid-area: desc;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    color: var(--fg);
+    text-shadow: 0 0 0.5rem var(--bg);
+}
+li a h2 {
+    grid-area: title;
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    color: var(--fg);
+    text-shadow: 0 0 0.5rem var(--bg);
+}
+li a *:hover {
+    color: rgba(255, 255, 255, 0.727);
+}
+li a:hover img {
+    transform: rotateY(180deg);
+    /* scale: .9; */
+}
+li a:hover {
     background-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 0.5rem #ffffff;
 }
@@ -94,17 +144,34 @@ a {
     font-size: 1.5rem;
     text-decoration: none;
     color: var(--fg);
-    /* text breake none */
     word-break: keep-all;
     min-width: 10rem;
     text-shadow: 0 0 0.5rem #fff;
     color: white;
+    grid-area: title;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 a:hover {
     color: var(--bg);
-}</style>
+}
+@media screen and (max-width: 768px) {
+    li a {
+        margin: 1rem;
+        max-height: 80%;
+        padding: 1rem;
+        background-color: rgba(0, 0, 0, 0.157);
+        box-shadow: 0 0 0.5rem #000000;
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas: "img title" "img desc";
+        border-radius: 0.5rem;
+        overflow: hidden;
+        /* its to height */
+        height: 100%;
+    }
+}
+</style>

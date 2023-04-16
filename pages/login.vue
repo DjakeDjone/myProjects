@@ -31,7 +31,7 @@ export default defineComponent({
 
 <template>
     <main>
-        <form @submit.prevent="login()" v-if="!userstore.loggedIn">
+        <form @submit.prevent="login()" v-if="!userstore.loggedIn && userstore.cookieAllowed">
             <h1>Login</h1>
             <div class="form-group">
                 <label for="username">Username</label>
@@ -51,6 +51,10 @@ export default defineComponent({
         <div v-else>
             <h1>Welcome {{ userstore.username }}</h1>
             <button @click="userstore.logout()">Logout</button>
+        </div>
+        <div v-else>
+            <h1>Cookie not allowed</h1>
+            <p>Cookie are not allowed, please reload and allow them to login</p>
         </div>
     </main>
 </template>

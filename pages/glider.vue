@@ -44,6 +44,10 @@ export default defineComponent({
             } catch (error) {
                 this.msg.throwError(error as string);
             }
+        },
+        reload() {
+            this.blogstore.getBlog()
+            const reloadIcon = document.getElementById('reloadIcon') as HTMLElement;
         }
     },
 })
@@ -89,6 +93,8 @@ export default defineComponent({
                         <i>{{ comment.time }}</i>
                     </div>
                 </li>
+                <nuxt-icon v-if="!blogstore.logadingBlog" @click="blogstore.getBlog()" name="reloadCircleSharp" id="reloadIcon"></nuxt-icon>
+                <nuxt-icon v-else class="turning" @click="blogstore.getBlog()" name="reloadCircleSharp" id="reloadIcon"></nuxt-icon>
             </ul>
         </div>
     </main>
@@ -102,9 +108,11 @@ main {
 main * {
     z-index: 1;
 }
+
 .fly {
     animation: fly 1s ease-in-out;
 }
+
 #jetIcon {
     transition: all 2s;
     font-size: 1.5rem;
@@ -113,6 +121,7 @@ main * {
     color: inherit;
     transition: 0.2s;
 }
+
 h1,
 #esp32Glider h2 {
     text-decoration: underline;
@@ -152,7 +161,29 @@ ul {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    color: black;
+}
+
+#comments #reloadIcon {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #fff;
+    opacity: 0.5;
+    transition: 0.2s;
+}
+
+#comments #reloadIcon:hover {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
+}
+
+#comments #reloadIcon:active {
+    opacity: 0.5;
+    transform: scale(1) rotate(360deg);
+}
+
+.turning {
+    animation: turn 1s infinite;
+    animation-delay: 0;
 }
 
 .commentLi {
@@ -167,6 +198,10 @@ ul {
     /* begin next line if the text is to long */
     word-break: break-word;
     color: black;
+}
+
+.commentLi:first-of-type {
+    margin-top: 0;
 }
 
 .commentLi:hover {
@@ -193,9 +228,11 @@ form {
     grid-template-columns: 3fr auto;
     margin-top: 1rem;
 }
+
 #sendBlog h2 {
     color: #000000b3;
 }
+
 #sendBlog form input {
     width: 100%;
     padding: 1rem;
@@ -241,6 +278,16 @@ form {
     scale: 0.9;
 }
 
+@keyframes turn {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @media screen and (min-width: 800px) {
     main {
         display: grid !important;
@@ -250,7 +297,8 @@ form {
         align-items: start;
         padding: 1rem;
     }
-    main > * {
+
+    main>* {
         margin-top: 0 !important;
         margin-bottom: auto;
     }

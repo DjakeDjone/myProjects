@@ -9,11 +9,20 @@ type comment = {
     time: string,
     content: string
 };
+type news = {
+    id: number,
+    title: string,
+    date: string,
+    content: string,
+    description: string,
+};
 export const useBlogStore = defineStore({
     id: "blog",
     state: () => ({
         blog: {},
         comments: [] as comment[],
+        logadingBlog: false,
+        news: [] as news[],
         API_Base: useRuntimeConfig().public.API_Base,
         comment: {
             name: "",
@@ -42,16 +51,19 @@ export const useBlogStore = defineStore({
             })
         },
         async getBlog() {
-            const data = await useFetch(this.API_Base + "/blog/Glider", {
+            this.logadingBlog = true;
+            const data = await $fetch(this.API_Base + "/blog/Glider", {
                 method: "GET",
             });
             try {
-                console.log(data.data.value);
-                const msg = JSON.parse(data.data.value as string);
+                const msg = JSON.parse(data as string);
                 this.blog = msg;
                 this.comments = msg.comments;
+                this.logadingBlog = false;
             } catch (error) {
                 console.log(error);
+                this.logadingBlog = false;
+                useMessagestore().throwError("获取博客失败");
             }
         },
         async postComment() {
@@ -71,5 +83,40 @@ export const useBlogStore = defineStore({
                 console.log(error);
             }
         },
+        async getNews() {
+            const data = await $fetch(this.API_Base + "/news", {
+                method: "GET",
+                cache: "no-cache",
+            });
+            try {
+                console.log(data);
+                const msg = JSON.parse(data as string);
+                if (msg.length == 0) {
+                    useMessagestore().throwError("暂无新闻");
+                    return;
+                }
+                this.news = JSON.parse(msg.news);
+                this.news = sortNews(this.news);
+                console.log("News:", this.news);
+                useMessagestore().throwSuccess("news loaded", 1000);
+            } catch (error) {
+                console.log(error);
+                useMessagestore().throwError("获取新闻失败");
+            }
+        }
     }
 });
+
+function sortNews(news: news[]) {
+    // sort them by date
+    for (let i = 0; i < news.length; i++) {
+        for (let j = i + 1; j < news.length; j++) {
+            if (news[i].date < news[j].date) {
+                let temp = news[i];
+                news[i] = news[j];
+                news[j] = temp;
+            }
+        }
+    }
+    return news;
+}

@@ -20,6 +20,10 @@ export default defineComponent({
       color4: '',
     };
   },
+  loading: {
+    color: '#fff',
+    height: '5px',
+  },
   mounted() {
     const mainAll = document.getElementById('mainAll') as HTMLElement;
     mainAll.addEventListener('mousemove', (e) => {
@@ -118,6 +122,7 @@ export default defineComponent({
         </li>
       </TransitionGroup>
     </div>
+    <AllowCookie v-if="userstore.cookieAllowed=== undefined"/>
   </div>
 </template>
 
@@ -133,28 +138,39 @@ export default defineComponent({
   color: #ffffffb3;
   scrollbar-width: thin;
 }
+button {
+  user-select: none;
+}
+a {
+  user-select: none;
+}
 .up-enter-active,
 .up-leave-active,
 .down-enter-active,
 .down-leave-active {
   transition: all 0.3s;
 }
+
 .up-enter-from {
   opacity: 0;
   transform: translate(0, 3rem);
 }
+
 .up-leave-to {
   opacity: 0;
   transform: translate(0, -3rem);
 }
+
 .down-enter-from {
   opacity: 0;
   transform: translate(0, -3rem);
 }
+
 .down-leave-to {
   opacity: 0;
   transform: translate(0, 3rem);
 }
+
 #errorFeld {
   position: fixed;
   bottom: 0;
@@ -254,7 +270,7 @@ export default defineComponent({
 
 @property --fg {
   syntax: '<color>';
-  initial-value: #ffffff;
+  initial-value: #000000;
   inherits: false;
 }
 
@@ -268,11 +284,12 @@ export default defineComponent({
   --x: 50%;
   --y: 50%;
   --footerHeight: 0;
+  --pointColor: #ffffff2c;
 }
 
 #mainAll {
-  --fg: #ffffff;
-  --bg: #00ff91;
+  --fg: #00ff15;
+  --bg: #004728;
   --y: 50%;
   --x: 50%;
   background: radial-gradient(circle at var(--x) var(--y),
@@ -300,14 +317,16 @@ footer {
 }
 
 /* Underline styles */
-h1 {
+h1,
+.underline {
   display: block;
   position: relative;
   padding: 0.2rem 0;
 }
 
 /* Fade in */
-h1::after {
+h1::after,
+.underline::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -320,7 +339,9 @@ h1::after {
 }
 
 h1:hover::after,
-h1:focus::after {
+h1:focus::after,
+.underline:hover::after,
+.underline:focus::after {
   opacity: 1;
   transform: translate3d(0, 0.2em, 0);
 }
@@ -328,19 +349,24 @@ h1:focus::after {
 
 
 h1::after,
-h1:focus::after {
+h1:focus::after,
+.underline::after,
+.underline:focus::after {
   transform: translate3d(0, 0, 0);
 }
 
 /* Scale from center */
-h1::after {
+h1::after,
+h1:focus::after {
   opacity: 1;
   transform: scale(0);
   transform-origin: center;
 }
 
 h1:hover::after,
-h1:focus::after {
+h1:focus::after,
+.underline:hover::after,
+.underline:focus::after {
   transform: scale(1);
 }
 </style>
@@ -471,6 +497,7 @@ a::after {
     align-items: flex-end;
   }
 }
+
 @keyframes OpacityAni {
   0% {
     opacity: 0;

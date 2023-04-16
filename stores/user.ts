@@ -9,6 +9,7 @@ export const useUserstore = defineStore({
         password: useCookie("password") || "",
         email: useCookie("email") || "",
         token: "",
+        cookieAllowed: undefined as boolean | undefined,
         API_Base: useRuntimeConfig().public.API_Base,
     }),
     actions: {
