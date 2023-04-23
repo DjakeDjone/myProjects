@@ -28,28 +28,44 @@ definePageMeta({
         </h2>
         <ul>
             <li>
-                <a href="https://fri3dl.com/projects/todo/" target="_blank">    
+                <a href="https://fri3dl.com/projects/todo/" target="_blank">
                     <h2>Todo-list</h2>
                     <!-- <NuxtIcon name="logoB" /> -->
-                    <img src="../assets/icons/logoB.svg" alt="">
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
                     <p>This is a page to manage and organize your todos! I made it for school</p>
                 </a>
             </li>
             <li>
                 <a href="https://fri3dl.com/projects/pizza" target="_blank">
-                <h2>
-                    Pizza
-                </h2>
-                    <img src="../assets/icons/logoB.svg" alt="">
+                    <h2>
+                        Pizza
+                    </h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
                     <p>This is a page to order pizza! I made it for school</p>
                 </a>
             </li>
             <li>
                 <a href="https://chat.fri3dl.com/tabs/login" target="_blank">
                     <h2>Chat-App</h2>
-                    <img src="../assets/icons/logoB.svg" alt="">
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
                     <p>This is a page to chat. I made it just for fun!</p>
                 </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <NuxtLink to="/glider">
+                    <h2>Esp32 Glider</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>A rc glilder controllable with the smartphone with a esp32 as controller</p>
+                </NuxtLink>
+            </li>
+            <li>
+                <NuxtLink to="/windrad">
+                    <h2>windgenerator</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>A selfmade windmill generates green energy for free!</p>
+                </NuxtLink>
             </li>
         </ul>
     </main>
@@ -104,7 +120,8 @@ li a {
     /* its to height */
     height: 100%;
 }
-li a img {
+
+.logo {
     transition: transform .5s ease;
     grid-area: img;
     width: 100%;
@@ -112,6 +129,7 @@ li a img {
     object-fit: contain;
     border-radius: 0.5rem;
 }
+
 li a p {
     grid-area: desc;
     margin: 0;
@@ -120,6 +138,7 @@ li a p {
     color: var(--fg);
     text-shadow: 0 0 0.5rem var(--bg);
 }
+
 li a h2 {
     grid-area: title;
     margin: 0;
@@ -128,13 +147,16 @@ li a h2 {
     color: var(--fg);
     text-shadow: 0 0 0.5rem var(--bg);
 }
+
 li a *:hover {
     color: rgba(255, 255, 255, 0.727);
 }
+
 li a:hover img {
     transform: rotateY(180deg);
     /* scale: .9; */
 }
+
 li a:hover {
     background-color: rgba(0, 0, 0, 0.2);
     box-shadow: 0 0 0.5rem #ffffff;
@@ -157,6 +179,7 @@ a {
 a:hover {
     color: var(--bg);
 }
+
 @media screen and (max-width: 768px) {
     li a {
         margin: 1rem;
@@ -173,5 +196,4 @@ a:hover {
         /* its to height */
         height: 100%;
     }
-}
-</style>
+}</style>

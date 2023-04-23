@@ -7,9 +7,9 @@ export default defineComponent({
         const blogstore = useBlogStore()
         const msg = useMessagestore()
         definePageMeta({
-            title: 'Home',
-            description: 'ESP32 Glider is a project to build a rc plane with a ESP32 microcontroller.',
-            keywords: 'fri3dl.com, glider, espGlider, esp32Glider, esp32glider',
+            title: 'Windrad',
+            description: 'The windmill is a project to generate green energy.',
+            keywords: 'fri3dl.com, windmill, windrad, windgenerator, wind turbine, green energy, wind energy, selfmade, selber bauen',
             _transitionIdx: 1,
             pageTransition: {
                 name: 'down',
@@ -36,7 +36,7 @@ export default defineComponent({
         }
     },
     mounted() {
-        this.blogstore.getBlog()
+        this.blogstore.getBlog("windrad")
         const jetIcon = document.getElementById('jetIcon') as HTMLElement;
         const sendButton = document.getElementById('sendButton') as HTMLElement;
     },
@@ -53,7 +53,7 @@ export default defineComponent({
             }
         },
         reload() {
-            this.blogstore.getBlog()
+            this.blogstore.getBlog("windrad")
             const reloadIcon = document.getElementById('reloadIcon') as HTMLElement;
         }
     },
@@ -63,22 +63,27 @@ export default defineComponent({
 <template>
     <main>
         <div id="esp32Glider">
-            <h1>Esp32 Glider</h1>
-            <p>ESP32 Glider is a project to build a rc plane with a ESP32 microcontroller.</p>
+            <h1>Wind generator</h1>
+            <p>This is a tiny project with the goal to generate green energy with a selfmade wind turbin and low costs.</p>
             <br>
             <h2>
                 What I have done so far:
             </h2>
             <ul>
                 <li>
-                    <p>I programmed the esp32 in C++, so that I can controll three servos with WebSockets</p>
+                    <p>I built two wind tourbins, both of them are now destroyed.</p>
                 </li>
                 <li>
-                    <p>I developed a web interface to controll the servos</p>
+                    <p></p>
                 </li>
             </ul>
-            <div class="programmCode" id="esp32Cpp">
-
+            <div>
+                <h1>How it works: </h1>
+                <p>First of all, I have to say that I am not an expert in this field. I am just a hobbyist who wants to learn
+                    something new. I have no idea how to build a wind turbin, but I have a lot of ideas. I will try to
+                    explain how I think it should work.</p>
+                    <img class="contentImage" src="../assets/images/windmill.png" alt="explain picture">
+                    <p>as Generator, I used an old motor of a howerboard. The wings of the windmill are wooden made, and the ball-bearing is an old scooter.</p>
             </div>
         </div>
         <div id="blog">
@@ -100,8 +105,10 @@ export default defineComponent({
                         <i>{{ comment.time }}</i>
                     </div>
                 </li>
-                <nuxt-icon v-if="!blogstore.logadingBlog" @click="blogstore.getBlog()" name="reloadCircleSharp" id="reloadIcon"></nuxt-icon>
-                <nuxt-icon v-else class="turning" @click="blogstore.getBlog()" name="reloadCircleSharp" id="reloadIcon"></nuxt-icon>
+                <nuxt-icon v-if="!blogstore.logadingBlog" @click="blogstore.getBlog()" name="reloadCircleSharp"
+                    id="reloadIcon"></nuxt-icon>
+                <nuxt-icon v-else class="turning" @click="blogstore.getBlog()" name="reloadCircleSharp"
+                    id="reloadIcon"></nuxt-icon>
             </ul>
         </div>
     </main>
@@ -119,7 +126,13 @@ main * {
 .fly {
     animation: fly 1s ease-in-out;
 }
-
+img {
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
 #jetIcon {
     transition: all 2s;
     font-size: 1.5rem;

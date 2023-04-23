@@ -25,7 +25,7 @@ export default defineComponent({
                 <button @click="userstore.cookieAllowed = false">Decline</button>
             </div>
             <div id="saveSettings">
-                <input type="checkbox" name="saveSetting"><label for="saveSetting">save decision</label>
+                <input type="checkbox" name="saveSetting" id="saveSetting"><label for="saveSetting">save decision</label>
             </div>
         </div>
     </div>

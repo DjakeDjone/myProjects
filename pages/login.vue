@@ -48,9 +48,10 @@ export default defineComponent({
             <button type="submit" class="submit"><span>Submit</span></button>
             <RouterLink to="/register">New at fri3dl.com?</RouterLink>
         </form>
-        <div v-else>
+        <div v-else-if="userstore.loggedIn">
             <h1>Welcome {{ userstore.username }}</h1>
-            <button @click="userstore.logout()">Logout</button>
+            <button id="logoutBtn" @click="userstore.logout()">Logout</button>
+            <NuxtLink to="/">Go to home page</NuxtLink>
         </div>
         <div v-else>
             <h1>Cookie not allowed</h1>
@@ -149,5 +150,30 @@ input:focus {
     width: 1rem;
     height: 1rem;
     cursor: pointer;
+}
+#logoutBtn {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #0000009c;
+    color: #fff;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+#logoutBtn:hover {
+    background-color: #00000043;
+    scale: 1.1;
+}
+#logoutBtn:active {
+    outline: none;
+    transform: rotateX(180deg);
+    scale: .8;
+}
+a {
+    display: block;
+    color: #fff;
+    margin-top: 1rem;
 }
 </style>

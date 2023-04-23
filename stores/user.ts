@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 import { useMessagestore } from "./msg";
+import Cookies from "js-cookie";
 
 export const useUserstore = defineStore({
     id: "user",
     state: () => ({
         loggedIn: false,
-        username: useCookie("username") || "",
-        password: useCookie("password") || "",
-        email: useCookie("email") || "",
+        username: Cookies.get("username") || "",
+        password: Cookies.get("password") || "",
+        email: Cookies.get("email") || "",
         token: "",
         cookieAllowed: undefined as boolean | undefined,
         API_Base: useRuntimeConfig().public.API_Base,
@@ -20,6 +21,20 @@ export const useUserstore = defineStore({
             this.email = "";
             this.token = "";
             useMessagestore().throwInfo("Logged out", 5000);
+        },
+        checkCookie() {
+            if (Cookies.get("username") != undefined) {
+                this.cookieAllowed = true;
+            } else {
+                this.cookieAllowed = false;
+            }
+        },
+        loadCookies() {
+            if (this.cookieAllowed) {
+                this.username = Cookies.get("username") || "";
+                this.password = Cookies.get("password") || "";
+                this.email = Cookies.get("email") || "";
+            }
         },
         async session() {
             if (this.username == "" || this.password == "") {
@@ -36,18 +51,20 @@ export const useUserstore = defineStore({
             });
             try {
                 let msg = JSON.parse(data.data.value as string);
-                if (msg==null) {
+                if (msg == null) {
                     useMessagestore().throwError("登录失败", 5000);
                     return;
                 }
                 console.log(msg);
-                if (msg.success) {
+                if (msg.type == "success") {
+                    console.log("login successful");
                     this.loggedIn = true;
                     this.token = msg.token;
-                    // create a cookie
-                    
-
                     useMessagestore().throwInfo("Login successful!", 5000);
+                    // create a cookie
+                    Cookies.set("username", this.username as string);
+                    Cookies.set("password", this.password as string);
+                    Cookies.set("email", this.email as string);
                 } else {
                     useMessagestore().throwError(msg.message, 5000);
                 }
@@ -67,12 +84,17 @@ export const useUserstore = defineStore({
             });
             try {
                 let msg = JSON.parse(data.data.value as string);
-                if (msg.success) {
+                console.log(msg);
+                if (msg != null && msg.type == "success") {
                     this.loggedIn = true;
                     this.token = msg.token;
-                    useMessagestore().throwInfo("successful created an account!", 5000);
                     // create a cookie
-
+                    Cookies.set("username", this.username as string);
+                    Cookies.set("password", this.password as string);
+                    Cookies.set("email", this.email as string);
+                    console.log('cookie set');
+                    console.log(Cookies.get("username"));
+                    useMessagestore().throwInfo("successful created an account!", 5000);
                 } else {
                     useMessagestore().throwError(msg.message, 5000);
                 }
@@ -93,4 +115,3 @@ function hashPassword(password: string) {
     }
     return hash;
 }
-    

@@ -25,7 +25,7 @@ export const useBlogStore = defineStore({
         news: [] as news[],
         API_Base: useRuntimeConfig().public.API_Base,
         comment: {
-            name: "",
+            name: useUserstore().username,
             content: "",
         }
     }),
@@ -50,10 +50,12 @@ export const useBlogStore = defineStore({
                 }
             })
         },
-        async getBlog() {
+        async getBlog(blogName: string = "Glider", from: number = 0, length: number = 10) {
             this.logadingBlog = true;
-            const data = await $fetch(this.API_Base + "/blog/Glider", {
+            console.log("getBlog", blogName);
+            const data = await $fetch(this.API_Base + "/blog/" + blogName, {
                 method: "GET",
+                cache: "no-cache",
             });
             try {
                 const msg = JSON.parse(data as string);

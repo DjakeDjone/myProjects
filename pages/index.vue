@@ -49,7 +49,7 @@ export default defineComponent({
 
 <template>
     <main>
-        <a href="">
+        <a href="https://fri3dl.com">
             <h1>Home</h1>
         </a>
         <h2>
@@ -198,12 +198,12 @@ li {
 
 @media screen and (min-width: 768px) {
     .newsItem {
-        width: 30%;
+        width: 45%;
     }    
 }
 @media screen and (min-width: 1024px) {
     .newsItem {
-        width: 20%;
-    }        
+        width: 30%;
+    }
 }
 </style>

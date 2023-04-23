@@ -11,6 +11,23 @@ export default defineComponent({
       userstore,
     };
   },
+  head() {
+    return {
+      title: 'Home',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Welcome to my website. It\'s built with nuxt, Vue, and Node.js in the backend.',
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node',
+        },
+      ],
+    };
+  },
   data() {
     return {
       folded: false,
@@ -34,6 +51,11 @@ export default defineComponent({
       this.color1,
       this.color2,
     )
+    // try to login
+    this.userstore.checkCookie();
+    this.userstore.loadCookies();
+    console.log(this.userstore.username, this.userstore.password);
+    this.userstore.session();
   },
   methods: {
     mouseGradient(x: number, y: number) {
@@ -122,7 +144,7 @@ export default defineComponent({
         </li>
       </TransitionGroup>
     </div>
-    <AllowCookie v-if="userstore.cookieAllowed=== undefined"/>
+    <AllowCookie v-if="userstore.cookieAllowed=== undefined || userstore.cookieAllowed===false"/>
   </div>
 </template>
 
