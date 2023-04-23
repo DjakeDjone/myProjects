@@ -1,6 +1,8 @@
 <script lang="ts">
 import { useUserstore } from '~/stores/user';
 import { useBlogStore } from '~/stores/blog';
+
+
 export default defineComponent({
     name: 'Home',
     transition: {
@@ -36,18 +38,27 @@ export default defineComponent({
             blogStore
         };
     },
+    data() {
+        return {
+            images: [] as HTMLImageElement[],
+            path: '../assets/images/bilder/'
+        }
+    },
     mounted() {
-        // navigator.clipboard.writeText('fri3dl.com');
-        // setTimeout(() => {
-        //     this.blogStore.getNews();
-        // }, 500);
         this.blogStore.getNews();
-    }
+    },
+    methods: {
+    },
 });
 
 </script>
 
 <template>
+    <Carousel>
+        <img src="../assets/images/bilder/0.webp" alt="Image 1">
+        <img src="../assets/images/bilder/1.webp" alt="Image 2">
+        <img src="../assets/images/bilder/2.webp" alt="Image 3">
+    </Carousel>
     <main>
         <a href="https://fri3dl.com">
             <h1>Home</h1>
@@ -193,14 +204,15 @@ li {
 @media screen and (max-width: 480px) {
     .newsItem {
         width: 90%;
-    }    
+    }
 }
 
 @media screen and (min-width: 768px) {
     .newsItem {
         width: 45%;
-    }    
+    }
 }
+
 @media screen and (min-width: 1024px) {
     .newsItem {
         width: 30%;

@@ -16,7 +16,7 @@ definePageMeta({
         if (!from.meta.pageTransition || (typeof from.meta.pageTransition === 'boolean')) return;
         if (typeof from.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
         from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
-    }
+    },
 })
 </script>
 
