@@ -6,26 +6,22 @@ export default defineComponent({
   setup() {
     const messagestore = useMessagestore();
     const userstore = useUserstore();
+    useServerSeoMeta({
+      
+      title: 'fri3dl',
+      ogTitle: 'fri3dl',
+      description: 'A website where I present my projects and websites',
+      ogDescription: 'A website where I present my projects and websites',
+      ogImage: 'https://fri3dl.com/logo.png',
+      ogUrl: 'https://fri3dl.com',
+      ogType: 'website',
+      twitterCard: 'summary_large_image',
+      twitterSite: '@fri3dl',
+      twitterCreator: '@fri3dl',
+    });
     return {
       messagestore,
       userstore,
-    };
-  },
-  head() {
-    return {
-      title: 'Home',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'Welcome to my website. It\'s built with nuxt, Vue, and Node.js in the backend.',
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node',
-        },
-      ],
     };
   },
   data() {
