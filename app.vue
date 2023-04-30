@@ -12,22 +12,18 @@ export default defineComponent({
       userstore,
     };
   },
-  head() {
-    return {
-      title: 'Home',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: 'Welcome to my website. It\'s built with nuxt, Vue, and Node.js in the backend.',
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node',
-        },
-      ],
-    };
+  head: {
+    title: 'fri3dl.com',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'My personal website where I present my projects and blog about my experiences.'
+      }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   data() {
     return {

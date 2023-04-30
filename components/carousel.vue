@@ -9,9 +9,9 @@ export default defineComponent({
     },
     mounted() {
         this.showOnly();
-        setInterval(() => {
-            this.next();
-        }, 5000);
+        // setInterval(async () => {
+        //     this.next();
+        // }, 5000);
     },
     methods: {
         next() {

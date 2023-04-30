@@ -1,8 +1,6 @@
 <script lang="ts">
 import { useUserstore } from '~/stores/user';
 import { useBlogStore } from '~/stores/blog';
-
-
 export default defineComponent({
     name: 'Home',
     transition: {
@@ -26,7 +24,6 @@ export default defineComponent({
                 if (!to.meta.pageTransition || (typeof to.meta.pageTransition === 'boolean')) return;
                 if (typeof to.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
                 to.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
-
                 if (!from.meta.pageTransition || (typeof from.meta.pageTransition === 'boolean')) return;
                 if (typeof from.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
                 from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
@@ -38,27 +35,17 @@ export default defineComponent({
             blogStore
         };
     },
-    data() {
-        return {
-            images: [] as HTMLImageElement[],
-            path: '../assets/images/bilder/'
-        }
-    },
     mounted() {
+        // navigator.clipboard.writeText('fri3dl.com');
+        // setTimeout(() => {
+        //     this.blogStore.getNews();
+        // }, 500);
         this.blogStore.getNews();
-    },
-    methods: {
-    },
+    }
 });
-
 </script>
 
 <template>
-    <Carousel>
-        <img src="../assets/images/bilder/0.webp" alt="Image 1">
-        <img src="../assets/images/bilder/1.webp" alt="Image 2">
-        <img src="../assets/images/bilder/2.webp" alt="Image 3">
-    </Carousel>
     <main>
         <a href="https://fri3dl.com">
             <h1>Home</h1>
@@ -147,7 +134,6 @@ h1 {
     max-height: 50vh;
 }
 
-
 ul {
     list-style: none;
     margin: 0;
@@ -175,7 +161,6 @@ ul {
 li {
     margin: 0 2rem;
 }
-
 
 @keyframes linearBackground {
     0% {
@@ -219,3 +204,4 @@ li {
     }
 }
 </style>
+
