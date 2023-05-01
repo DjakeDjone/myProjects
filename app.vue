@@ -18,6 +18,7 @@ export default defineComponent({
       twitterCard: 'summary_large_image',
       twitterSite: '@fri3dl',
       twitterCreator: '@fri3dl',
+      
     });
     return {
       messagestore,
