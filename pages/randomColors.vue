@@ -9,9 +9,9 @@ export default defineComponent({
     },
     setup() {
         definePageMeta({
-            title: 'Home',
-            description: 'Page to generate random colors for a radial gradient.',
-            keywords: 'random, colors, radial, gradient',
+            title: 'Random Colors',
+            description: 'Random Colors',
+            keywords: 'random, colors, radial, gradient, mouse, following',
             _transitionIdx: 3,
             pageTransition: {
                 name: 'down',
