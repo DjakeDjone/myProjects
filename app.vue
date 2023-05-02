@@ -8,7 +8,6 @@ export default defineComponent({
     const messagestore = useMessagestore();
     const userstore = useUserstore();
     useServerSeoMeta({
-      
       title: 'fri3dl',
       ogTitle: 'fri3dl',
       description: 'A website where I present my projects and websites',
@@ -19,7 +18,6 @@ export default defineComponent({
       twitterCard: 'summary_large_image',
       twitterSite: '@fri3dl',
       twitterCreator: '@fri3dl',
-      
     });
     return {
       messagestore,
@@ -122,6 +120,12 @@ export default defineComponent({
         <li>
           <NuxtLink to="/randomColors">generator</NuxtLink>
         </li>
+        <li>
+          <NuxtLink to="/english">English</NuxtLink>
+        </li>
+        <!-- <li>
+          <NuxtLink to="/about">About</NuxtLink>
+        </li> -->
       </ul>
     </nav>
     <div id="page" @click="closeMenuFolder()">
@@ -449,7 +453,7 @@ nav ul {
 }
 
 nav ul li {
-  margin: 1rem 0;
+  margin: .7rem 0;
 }
 
 nav * {

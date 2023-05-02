@@ -54,11 +54,6 @@ export default defineComponent({
 </script>
 
 <template>
-    <Carousel>
-        <img src="../assets/images/bilder/0.webp" alt="Image 1">
-        <img src="../assets/images/bilder/1.webp" alt="Image 2">
-        <img src="../assets/images/bilder/2.webp" alt="Image 3">
-    </Carousel>
     <main>
         <a href="https://fri3dl.com">
             <h1>Home</h1>
