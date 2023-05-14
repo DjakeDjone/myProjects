@@ -19,7 +19,7 @@ export default defineComponent({
     },
     mounted() {
         this.school.getTopic(this.school.currentSubject.id, this.$route.params.topic as unknown as number)
-        this.user.isAdmin = true
+        // this.user.isAdmin = true
     },
     methods: {
         getTopic(id: number) {
