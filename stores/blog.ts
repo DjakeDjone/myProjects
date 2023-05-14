@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { useMessagestore } from "./msg";
 import { useUserstore } from "./user";
 
-type comment = {
+export type comment = {
     id: number,
     user: string,
     time: string,

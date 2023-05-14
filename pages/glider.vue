@@ -7,7 +7,7 @@ export default defineComponent({
         const blogstore = useBlogStore()
         const msg = useMessagestore()
         definePageMeta({
-            title: 'Home',
+            title: 'Glider',
             description: 'ESP32 Glider is a project to build a rc plane with a ESP32 microcontroller.',
             keywords: 'fri3dl.com, glider, espGlider, esp32Glider, esp32glider',
             _transitionIdx: 1,

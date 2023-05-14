@@ -106,26 +106,20 @@ export default defineComponent({
       <nuxt-icon name="menu" @click="menuFolder()" id="menuIcon" />
       <ul v-if="folded">
         <li>
-          <!-- <RouterLink to="/">Home</RouterLink> -->
           <NuxtLink class="underlineEffect" to="/">Home</NuxtLink>
         </li>
         <li>
-          <!-- <RouterLink to="/glider">Glider</RouterLink> -->
           <NuxtLink class="underlineEffect" to="/glider">Glider</NuxtLink>
         </li>
         <li>
-          <!-- <RouterLink to="/projects">Projects</RouterLink> -->
           <NuxtLink to="/projects">Projects</NuxtLink>
         </li>
         <li>
           <NuxtLink to="/randomColors">generator</NuxtLink>
         </li>
         <li>
-          <NuxtLink to="/english">English</NuxtLink>
+          <NuxtLink to="/school">school</NuxtLink>
         </li>
-        <!-- <li>
-          <NuxtLink to="/about">About</NuxtLink>
-        </li> -->
       </ul>
     </nav>
     <div id="page" @click="closeMenuFolder()">
@@ -164,6 +158,22 @@ export default defineComponent({
 }
 button {
   user-select: none;
+  cursor: pointer;
+  border: none;
+  background-color: #ffffff2c;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 1.2rem;
+  margin: 0.5rem;
+  /* box-shadow: 0 0 0.5rem #000000; */
+}
+button:hover {
+  box-shadow: 0 0 0.5rem #ffffff;
+}
+button:active {
+  box-shadow: 0 0 0.5rem #ffffff;
+  transform: scale(0.9);
 }
 a {
   user-select: none;
@@ -548,8 +558,7 @@ a::after {
     padding-top: 3rem;
   }
 }
-</style>
-<style scoped>
+
 ul {
   list-style: none;
   padding: 0;
