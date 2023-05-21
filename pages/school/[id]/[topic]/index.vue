@@ -17,8 +17,13 @@ export default defineComponent({
         return {
         }
     },
+    beforeMount() {
+        // this.school.getSubject(this.$route.params.id as unknown as number)
+        this.school.getSubject(this.$route.params.id as unknown as number)
+        this.school.getTopic(this.$route.params.id as unknown as number, this.$route.params.topic as unknown as number)
+    },
     mounted() {
-        this.school.getTopic(this.school.currentSubject.id, this.$route.params.topic as unknown as number)
+        this.school.getTopic(this.$route.params.subject as unknown as number, this.$route.params.topic as unknown as number)
         // this.user.isAdmin = true
     },
     methods: {
@@ -27,6 +32,13 @@ export default defineComponent({
             this.school.getTopic(this.school.currentSubject.id, id)
             // router
             this.$router.push({ path: '/school/' + this.school.currentSubject.id + '/' + id })
+        },
+        drawContent(content: Content) {
+            console.log('drawContent', content);
+            const div = document.getElementById(content.id + '')
+            if (div) {
+                div.innerHTML = content.content
+            }
         },
     },
 })
@@ -41,10 +53,11 @@ export default defineComponent({
         <div>
             <!-- <h2>{{ school.currentTopic }}</h2> -->
         </div>
-        <div v-for="content in school.currentTopic.contents" :key="content.id">
+        <div v-for="content in school.currentTopic.contents" :key="content.id" @click="drawContent(content)">
             <h2>{{ content.title }}</h2>
             <p>{{ content.zugriffe }}</p>
-            <p>{{ content.content }}</p>
+            <div :id="content.id + ''">
+            </div>
             <div v-for="img in content.images">
                 <img :src="img" alt="Image" />
             </div>
@@ -67,6 +80,7 @@ export default defineComponent({
     margin: 1rem;
     padding: 1rem;
 }
+
 .adminWindows {
     border-top: 1px solid black;
     margin: 1rem;

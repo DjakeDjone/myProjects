@@ -108,9 +108,9 @@ export default defineComponent({
         <li>
           <NuxtLink class="underlineEffect" to="/">Home</NuxtLink>
         </li>
-        <li>
+        <!-- <li>
           <NuxtLink class="underlineEffect" to="/glider">Glider</NuxtLink>
-        </li>
+        </li> -->
         <li>
           <NuxtLink to="/projects">Projects</NuxtLink>
         </li>
@@ -119,6 +119,9 @@ export default defineComponent({
         </li>
         <li>
           <NuxtLink to="/school">school</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink class="underlineEffect" to="/about">About</NuxtLink>
         </li>
       </ul>
     </nav>

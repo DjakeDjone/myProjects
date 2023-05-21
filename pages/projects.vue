@@ -28,6 +28,27 @@ definePageMeta({
         </h2>
         <ul>
             <li>
+                <a href="https://quiz.fri3dl.com">
+                    <h2>Quiz-App</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>This is a page to play or create quizes. I made it just for fun.</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://quizsimple.fri3dl.com/">
+                    <h2>Quiz-App</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>This is a page to play one given Quiz. I made it for school</p>
+                </a>
+            </li>
+            <li>
+                <a href="https://old.fri3dl.com">
+                    <h2>Old Website</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>This is my old website. See the changes to my current landing!</p>
+                </a>
+            </li>
+            <li>
                 <a href="https://fri3dl.com/projects/todo/" target="_blank">
                     <h2>Todo-list</h2>
                     <!-- <NuxtIcon name="logoB" /> -->
@@ -51,6 +72,7 @@ definePageMeta({
                     <p>This is a page to chat. I made it just for fun!</p>
                 </a>
             </li>
+
         </ul>
         <ul>
             <li>
@@ -99,7 +121,8 @@ ul {
     display: flex;
     flex-direction: row;
     /* align-items: center; */
-    overflow-x: scroll;
+    overflow-y: hidden;
+    overflow-x: auto;
     max-width: 100%;
     /* background-color: rgba(0, 0, 0, 0.157); */
     /* box-shadow: 0 0 0.5rem #fcfcfc; */
@@ -167,7 +190,7 @@ a {
     text-decoration: none;
     color: var(--fg);
     word-break: keep-all;
-    min-width: 10rem;
+    min-width: 15rem;
     text-shadow: 0 0 0.5rem #fff;
     color: white;
     grid-area: title;
@@ -196,4 +219,5 @@ a:hover {
         /* its to height */
         height: 100%;
     }
-}</style>
+}
+</style>

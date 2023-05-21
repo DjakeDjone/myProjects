@@ -61,16 +61,20 @@ img {
     border-radius: 50%;
     margin-left: 2rem;
     box-shadow: 0 0 1rem 0.5rem #000000;
+    opacity: 0.8;
     object-fit: cover;
     object-position: center;
+    transition: all 1s ease-in-out;
 }
 img:hover {
     box-shadow: 0 0 1rem 0.5rem #ffffff;
     object-position: center;
     scale: 1.1;
+    opacity: 1;
+    filter: brightness(1.2);
 }
-.aboutText {
-}
+/* .aboutText {
+} */
 #aboutMain {
     display: flex;
     flex-direction: row !important;

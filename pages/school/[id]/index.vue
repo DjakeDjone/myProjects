@@ -16,6 +16,10 @@ export default defineComponent({
             blogPage: 0,
         }
     },
+    beforeMount() {
+        // this.school.getSubject(this.$route.params.id as unknown as number)
+        this.school.getSubject(this.$route.params.id as unknown as number)
+    },
     mounted() {
         this.subject = this.school.currentSubject;
         console.log(this.subject)
@@ -38,7 +42,7 @@ export default defineComponent({
         <div>
             <h1>{{ subject.name }}</h1>
             <!-- <div>{{ subject }}</div> -->
-            <div v-for="topic in subject.topics" :key="topic.id">
+            <div v-for="topic in subject.topics" :key="topic.id" class="topic">
                 <h2>{{ topic.name }}</h2>
                 <div class="contentPrev" v-for="content in topic.contents" :key="content.id" @click="getTopic(content.id)">
                     <h3>{{ content.title }}</h3>
@@ -63,6 +67,25 @@ export default defineComponent({
 
 .contentPrev:hover {
     opacity: 1;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.topic {
+    /* border: 1px solid black; */
+    background-color: rgba(0, 0, 0, 0.27);
+    color: var(--bg);
+    /* border-radius: 1rem; */
+    opacity: 0.8;
+    margin: 1rem;
+    padding: 1rem;
+}
+.topic:hover {
+    opacity: 1;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.topic:active {
+    opacity: 0.8;
     border-radius: 1rem;
     cursor: pointer;
 }
