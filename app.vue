@@ -54,6 +54,24 @@ export default defineComponent({
     this.userstore.session();
   },
   methods: {
+    switchEnableAbleGradient(target: HTMLInputElement) {
+      const mainAll = document.getElementById('mainAll') as HTMLElement;
+      if (target.checked) {
+        console.log('unchecked');
+        mainAll.removeEventListener('mousemove', (e) => {
+          // console.log(e.clientX, e.clientY);
+          this.mouseGradient(e.clientX, e.clientY);
+        });
+        mainAll.style.background = `radial-gradient(circle at var(--x) var(--y), var(--fg) 0%, var(--bg) 100%)`;
+      } else {
+        console.log('checked');
+        mainAll.addEventListener('mousemove', (e) => {
+          // console.log(e.clientX, e.clientY);
+          this.mouseGradient(e.clientX, e.clientY);
+        });
+        mainAll.style.background = `radial-gradient(circle at var(--x) var(--y), var(--fg) 0%, var(--bg) 100%)`;
+      }
+    },
     mouseGradient(x: number, y: number) {
       const page = document.getElementById('mainAll') as HTMLElement;
       const xValue = x / window.innerWidth * 100;
@@ -123,6 +141,11 @@ export default defineComponent({
         <li>
           <NuxtLink class="underlineEffect" to="/about">About</NuxtLink>
         </li>
+        <li>
+          <!-- input toggle -->
+          <input type="checkbox" id="switchAnimation" @click="switchEnableAbleGradient($event.target as HTMLInputElement)">
+          <label for="switchAnimation">Toggle</label>
+        </li>
       </ul>
     </nav>
     <div id="page" @click="closeMenuFolder()">
@@ -143,7 +166,7 @@ export default defineComponent({
         </li>
       </TransitionGroup>
     </div>
-    <AllowCookie v-if="userstore.cookieAllowed=== undefined || userstore.cookieAllowed===false"/>
+    <AllowCookie v-if="userstore.cookieAllowed === undefined || userstore.cookieAllowed === false" />
   </div>
 </template>
 
@@ -159,6 +182,53 @@ export default defineComponent({
   color: #ffffffb3;
   scrollbar-width: thin;
 }
+
+input[type=checkbox] {
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
+
+label {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 3rem;
+  height: 1.5rem;
+  background: grey;
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+label:after {
+  content: '';
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  width: 1rem;
+  height: 1rem;
+  background: radial-gradient(circle,
+      #ffffff 0%,
+      #000000 100%);
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input:checked+label {
+  background: linear-gradient(to right, #00ff91, #004728);
+  box-shadow: inset 0 0 0.5rem #000000;
+}
+
+input:checked+label:after {
+  left: calc(100% - 0.25rem);
+  transform: translateX(-100%);
+}
+
+label:active:after {
+  width: 1.5rem;
+}
+
+
 button {
   user-select: none;
   cursor: pointer;
@@ -171,16 +241,20 @@ button {
   margin: 0.5rem;
   /* box-shadow: 0 0 0.5rem #000000; */
 }
+
 button:hover {
   box-shadow: 0 0 0.5rem #ffffff;
 }
+
 button:active {
   box-shadow: 0 0 0.5rem #ffffff;
   transform: scale(0.9);
 }
+
 a {
   user-select: none;
 }
+
 .up-enter-active,
 .up-leave-active,
 .down-enter-active,
