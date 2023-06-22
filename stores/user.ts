@@ -11,7 +11,8 @@ export const useUserstore = defineStore({
         email: Cookies.get("email") || "",
         token: "",
         isAdmin: false,
-        cookieAllowed: undefined as boolean | undefined,
+        // cookieAllowed: undefined as boolean | undefined,
+        cookieAllowed: true,
         API_Base: useRuntimeConfig().public.API_Base,
     }),
     actions: {
@@ -21,17 +22,17 @@ export const useUserstore = defineStore({
             this.password = "";
             this.email = "";
             this.token = "";
-            Cookies.remove("username");
-            Cookies.remove("password");
-            Cookies.remove("email");
+            // Cookies.remove("username");
+            // Cookies.remove("password");
+            // Cookies.remove("email");
             useMessagestore().throwInfo("Logged out", 5000);
         },
         checkCookie() {
-            if (Cookies.get("username") != undefined) {
-                this.cookieAllowed = true;
-            } else {
-                this.cookieAllowed = false;
-            }
+            // if (Cookies.get("username") != undefined) {
+            //     this.cookieAllowed = true;
+            // } else {
+            //     this.cookieAllowed = false;
+            // }
         },
         checkIfCookieAllowed() {
             if (this.cookieAllowed == undefined) {
@@ -46,9 +47,9 @@ export const useUserstore = defineStore({
         loadCookies() {
             console.log("loading cookies");
             if (this.cookieAllowed || this.checkIfCookieAllowed()) {
-                this.username = Cookies.get("username") || "";
-                this.password = Cookies.get("password") || "";
-                this.email = Cookies.get("email") || "";
+                // this.username = Cookies.get("username") || "";
+                // this.password = Cookies.get("password") || "";
+                // this.email = Cookies.get("email") || "";
                 this.cookieAllowed = true;
                 this.loggedIn = true;
             }
@@ -85,9 +86,9 @@ export const useUserstore = defineStore({
                     // create a cookie if allowed
                     // cookie will be deleted after 20 days
                     if (this.cookieAllowed) {
-                        Cookies.set("username", this.username as string, { expires: 20 });
-                        Cookies.set("password", this.password as string, { expires: 20 });
-                        Cookies.set("email", this.email as string, { expires: 20 });
+                        // Cookies.set("username", this.username as string, { expires: 20 });
+                        // Cookies.set("password", this.password as string, { expires: 20 });
+                        // Cookies.set("email", this.email as string, { expires: 20 });
                     }
                 } else {
                     useMessagestore().throwError(msg.message, 5000);

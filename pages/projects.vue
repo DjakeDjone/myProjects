@@ -28,6 +28,13 @@ definePageMeta({
         </h2>
         <ul>
             <li>
+                <a href="https://search.fri3dl.com">
+                    <h2>Search-App</h2>
+                    <img class="logo" src="../assets/icons/logoB.svg" alt="">
+                    <p>Get the controll of the web and search with SOCK! I made it just for fun.</p>
+                </a>
+            </li>
+            <li>
                 <a href="https://quiz.fri3dl.com">
                     <h2>Quiz-App</h2>
                     <img class="logo" src="../assets/icons/logoB.svg" alt="">

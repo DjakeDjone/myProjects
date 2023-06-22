@@ -142,10 +142,13 @@ export default defineComponent({
           <NuxtLink class="underlineEffect" to="/about">About</NuxtLink>
         </li>
         <li>
-          <!-- input toggle -->
+          <NuxtLink class="underlineEffect" to="/caps">Caps</NuxtLink>
+        </li>
+        <!-- <li>
+          input toggle
           <input type="checkbox" id="switchAnimation" @click="switchEnableAbleGradient($event.target as HTMLInputElement)">
           <label for="switchAnimation">Toggle</label>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <div id="page" @click="closeMenuFolder()">
