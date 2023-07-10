@@ -86,6 +86,7 @@ export const useBlogStore = defineStore({
             }
         },
         async getNews() {
+            console.log("getNews", this.API_Base);
             const data = await $fetch(this.API_Base + "/news", {
                 method: "GET",
                 cache: "no-cache",

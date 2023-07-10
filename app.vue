@@ -48,10 +48,10 @@ export default defineComponent({
       this.color2,
     )
     // try to login
-    this.userstore.checkCookie();
-    this.userstore.loadCookies();
-    console.log(this.userstore.username, this.userstore.password);
-    this.userstore.session();
+    // this.userstore.checkCookie();
+    // this.userstore.loadCookies();
+    // console.log(this.userstore.username, this.userstore.password);
+    // this.userstore.session();
   },
   methods: {
     switchEnableAbleGradient(target: HTMLInputElement) {
@@ -116,9 +116,9 @@ export default defineComponent({
 <template>
   <div id="mainAll">
     <div id="rightNav">
-      <NuxtLink to="/login" v-if="!userstore.loggedIn">Login
+      <!-- <NuxtLink to="/login" v-if="!userstore.loggedIn">Login
         <NuxtIcon name="login" @click="" id="menuIcon" />
-      </NuxtLink>
+      </NuxtLink> -->
     </div>
     <nav class="close" id="leftNav">
       <nuxt-icon name="menu" @click="menuFolder()" id="menuIcon" />
@@ -141,9 +141,9 @@ export default defineComponent({
         <li>
           <NuxtLink class="underlineEffect" to="/about">About</NuxtLink>
         </li>
-        <li>
+        <!-- <li>
           <NuxtLink class="underlineEffect" to="/caps">Caps</NuxtLink>
-        </li>
+        </li> -->
         <!-- <li>
           input toggle
           <input type="checkbox" id="switchAnimation" @click="switchEnableAbleGradient($event.target as HTMLInputElement)">
@@ -169,7 +169,7 @@ export default defineComponent({
         </li>
       </TransitionGroup>
     </div>
-    <AllowCookie v-if="userstore.cookieAllowed === undefined || userstore.cookieAllowed === false" />
+    <!-- <AllowCookie v-if="userstore.cookieAllowed === undefined || userstore.cookieAllowed === false" /> -->
   </div>
 </template>
 
@@ -190,31 +190,6 @@ input[type=checkbox] {
   height: 0;
   width: 0;
   visibility: hidden;
-}
-
-label {
-  cursor: pointer;
-  text-indent: -9999px;
-  width: 3rem;
-  height: 1.5rem;
-  background: grey;
-  display: block;
-  border-radius: 100px;
-  position: relative;
-}
-
-label:after {
-  content: '';
-  position: absolute;
-  top: 0.25rem;
-  left: 0.25rem;
-  width: 1rem;
-  height: 1rem;
-  background: radial-gradient(circle,
-      #ffffff 0%,
-      #000000 100%);
-  border-radius: 90px;
-  transition: 0.3s;
 }
 
 input:checked+label {

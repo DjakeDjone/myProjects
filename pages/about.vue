@@ -1,21 +1,26 @@
 <script lang="ts" setup>
-// definePageMeta({
-//     title: 'About me',
-//     description: 'About me',
-//     keywords: 'About me',
-//     url: 'about',
-//     type: 'website',
-//     locale: 'en_US',
-//     og: {
-//         site_name: 'fri3dl.com',
-//         type: 'website',
-//         locale: 'en_US',
-//         url: 'https://fri3dl.com/about',
-//         title: 'About me',
-//         description: 'About me',
-//     },
-//     _transitionIdx: 1,
-// });
+
+definePageMeta({
+    title: 'Home',
+    description: 'Welcome to my website. It\'s built with nuxt, Vue, and Node.js in the backend.',
+    keywords: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node',
+    _transitionIdx: 5,
+    pageTransition: {
+        name: 'down',
+        mode: 'out-in',
+    },
+    middleware(to, from) {
+        if (!to.meta.pageTransition || (typeof to.meta.pageTransition === 'boolean')) return;
+        if (typeof to.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+        to.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+
+        if (!from.meta.pageTransition || (typeof from.meta.pageTransition === 'boolean')) return;
+        if (typeof from.meta._transitionIdx !== 'number' || typeof from.meta._transitionIdx !== 'number') return;
+        from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
+    }
+})
+
+
 </script>
 
 <template>
@@ -66,6 +71,7 @@ img {
     object-position: center;
     transition: all 1s ease-in-out;
 }
+
 img:hover {
     box-shadow: 0 0 1rem 0.5rem #ffffff;
     object-position: center;
@@ -73,6 +79,7 @@ img:hover {
     opacity: 1;
     filter: brightness(1.2);
 }
+
 /* .aboutText {
 } */
 #aboutMain {
@@ -83,13 +90,14 @@ img:hover {
     height: 100%;
     width: 100%;
 }
+
 @media (max-width: 700px) {
     #aboutMain {
         flex-direction: column !important;
     }
+
     img {
         margin-left: 0;
         margin-top: 2rem;
     }
-}
-</style>
+}</style>
