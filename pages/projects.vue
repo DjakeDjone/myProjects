@@ -18,6 +18,19 @@ definePageMeta({
         from.meta.pageTransition.name = to.meta._transitionIdx > from.meta._transitionIdx ? 'up' : 'down';
     },
 })
+
+const layout2 = () => {
+    const ul = document.querySelectorAll('ul') as NodeListOf<HTMLElement>;
+    ul.forEach((ul) => {
+        ul.classList.toggle('layout2Ul');
+        ul.classList.toggle('layout1Ul');
+    });
+    const li = document.querySelectorAll('li') as NodeListOf<HTMLElement>;
+    li.forEach((li) => {
+        li.classList.toggle('layout2Li');
+        li.classList.toggle('layout1Li');
+    });
+}
 </script>
 
 <template>
@@ -25,8 +38,9 @@ definePageMeta({
         <h1>Projects</h1>
         <h2>
             This is the projects page. It's made to preview my projects.
+            <NuxtIcon name="layout" id="layoutIcon" @click="layout2"/>
         </h2>
-        <ul>
+        <ul id="webprojects" class="layout1Ul">
             <li>
                 <a href="https://search.fri3dl.com">
                     <h2>Search-Engine</h2>
@@ -72,7 +86,7 @@ definePageMeta({
                     <p>This is a page to order pizza! I made it for school</p>
                 </a>
             </li>
-            <li>
+            <li class="notactive">
                 <a href="https://chat.fri3dl.com/tabs/login" target="_blank">
                     <h2>Chat-App</h2>
                     <img class="logo" src="../assets/icons/logoB.svg" alt="">
@@ -81,7 +95,7 @@ definePageMeta({
             </li>
 
         </ul>
-        <ul>
+        <ul id="blogs" class="layout1Ul">
             <li>
                 <NuxtLink to="/glider">
                     <h2>Esp32 Glider</h2>
@@ -120,7 +134,16 @@ h2 {
     margin: 0;
 }
 
-ul {
+.notactive a {
+    box-shadow: 0 0 0.8rem #ff0000;
+}
+.notactive a:hover {
+    box-shadow: 0 0 1rem #940000;
+}
+.notactive a *:hover {
+    color: #880000;
+}
+.layout1Ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -133,6 +156,86 @@ ul {
     max-width: 100%;
     /* background-color: rgba(0, 0, 0, 0.157); */
     /* box-shadow: 0 0 0.5rem #fcfcfc; */
+}
+
+.layout2Ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* breake line */
+    flex-wrap: wrap;
+    align-items: center;
+    overflow-y: hidden;
+    overflow-x: auto;
+    max-width: 100%;
+
+}
+
+.layout2Ul li {
+    /* width: 25rem; */
+    width: 60%;
+    height: 10rem;
+    min-width: 20rem;
+    max-width: 40rem;
+    /* height: 10rem; */
+}
+.layout2Ul li:nth-of-type(2n) {
+    width: 40%;
+    /* height: 12rem; */
+    /* width: 40%; */
+}
+.layout2Ul li:nth-of-type(4n - 1) {
+    width: 40%;
+}
+.layout2Ul li:nth-of-type(4n) {
+    width: 60%;
+}
+@media screen and (max-width: 768px) {
+    .layout2Ul li {
+        width: 100%;
+        height: 10rem;
+        min-width: 20rem;
+        max-width: 40rem;
+        /* height: 10rem; */
+    }
+    .layout2Ul li:nth-of-type(2n) {
+        width: 100%;
+        /* height: 12rem; */
+        /* width: 40%; */
+    }
+    .layout2Ul li:nth-of-type(4n - 1) {
+        width: 100%;
+    }
+    .layout2Ul li:nth-of-type(4n) {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .layout2Ul li {
+        width: 10%;
+        height: 10rem;
+        min-width: 20rem;
+        /* max-width: 40rem; */
+        /* height: 10rem; */
+    }
+    .layout2Ul li:nth-of-type(3n) {
+        width: 50%;
+        /* height: 12rem; */
+        /* width: 40%; */
+    }
+    .layout2Ul li:nth-of-type(3n - 1) {
+        width: 50%;
+    }
+    .layout2Ul li:nth-of-type(3n) {
+        width: 50%;
+    }
+}
+.layout2Ul li:nth-of-type(4n) {
 }
 
 li a {

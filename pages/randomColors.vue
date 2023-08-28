@@ -109,6 +109,7 @@ button {
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.5s ease;
+    animation: buttonToggling 0.5s ease-in-out;
 }
 
 button:hover {
