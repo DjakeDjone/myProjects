@@ -15,7 +15,7 @@ export default defineComponent({
         const userstore = useUserstore();
         definePageMeta({
             title: 'Home',
-            description: 'Welcome to my website. It\'s built with nuxt, Vue, and Node.js in the backend.',
+            description: 'Welcome to my landing page. It\'s built with nuxt, Vue, and Node.js in the backend.',
             keywords: 'fri3dl.com, Benjamin Friedl, benji, vue, Vue, nuxt, Nuxt, node, Node',
             _transitionIdx: 0,
             pageTransition: {
@@ -59,7 +59,7 @@ export default defineComponent({
             <h1>Home</h1>
         </a>
         <h2>
-            Welcome to my website. It's made with <a href="nuxt.com">nuxt</a>, Vue, and Node.js in the backend.
+            Welcome to my landing page. It's made with <a href="nuxt.com">nuxt</a>, Vue, and Node.js in the backend.<br> Visit my projects view to see what I've been working on.
         </h2>
         <br>
         <h2>

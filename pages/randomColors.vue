@@ -31,10 +31,13 @@ export default defineComponent({
     mounted() {
         const page = document.getElementById('page') as HTMLElement;
         const randomColorsMain = document.getElementById('background') as HTMLElement;
-        this.changeColors(
-            this.color1,
-            this.color2,
-        )
+        const mainAll = document.getElementById('mainAll') as HTMLElement;
+        this.color1 = mainAll.style.getPropertyValue('--fg');
+        this.color2 = mainAll.style.getPropertyValue('--bg');
+            this.changeColors(
+                this.color1,
+                this.color2,
+            )
     },
     methods: {
         copyGradient() {
@@ -62,14 +65,14 @@ export default defineComponent({
         },
     },
     beforeUnmount() {
-        const page = document.getElementById('page') as HTMLElement;
-        page.removeEventListener('mousemove', (e) => {
-            // console.log(e.clientX, e.clientY);
-            this.mouseGradient(e.clientX, e.clientY);
-        });
-        this.color1 = 'rgba(59, 208, 110, 1)' as string,
-            this.color2 = 'rgba(59, 88, 110, 1)' as string,
-            this.changeColors(this.color1 as string, this.color2 as string)
+        // const page = document.getElementById('page') as HTMLElement;
+        // page.removeEventListener('mousemove', (e) => {
+        //     // console.log(e.clientX, e.clientY);
+        //     this.mouseGradient(e.clientX, e.clientY);
+        // });
+        // this.color1 = 'rgba(59, 208, 110, 1)' as string,
+        //     this.color2 = 'rgba(59, 88, 110, 1)' as string,
+        //     this.changeColors(this.color1 as string, this.color2 as string)
     },
 })
 </script>
@@ -82,7 +85,8 @@ export default defineComponent({
         <div class="copyHtml">
             <p id="gradient">radial-gradient(circle at {{ 50 }}% {{ 50 }}%, {{ color1 }} 0%, {{
                 color2 }} 100%)</p>
-            <NuxtIcon @click="copyGradient" class="copyIcon" name="copy" />
+            <NuxtIcon @click="copyGradient" class="copy icon" name="copy" />
+            <NuxtIcon @click="changeColors('rgba(59, 208, 110, 1)', 'rgba(0, 88, 110, 1)')" class="icon turning" name="reloadCircleSharp" />
         </div>
         <button @click="changeColorsRandom()">generate</button>
     </main>
@@ -93,6 +97,7 @@ main {
     height: 100%;
     transition: all 0.3s ease;
 }
+
 button {
     background: var(--fg);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -105,21 +110,34 @@ button {
     cursor: pointer;
     transition: all 0.5s ease;
 }
+
 button:hover {
     background: var(--bg);
     color: var(--fg);
 }
+
 button:active {
-    scale: 0.6;
+    /* scale: 0.6; */
     /* turn the button up to 90deg */
-    transform: rotateZ(-360deg);
+    /* transform: rotateZ(10deg); */
     /* transition the transform to look smooth */
     /* transition: transform 0.9s; */
     /* padding: 0.5rem; */
+    animation: buttonToggling 0.5s infinite;
+}
+
+.turning:hover {
+    transform: rotateZ(100deg);
+    transition: transform 0.9s;
+}
+.turning:active {
+    transform: rotateZ(360deg);
+    transition: transform 0.9s;
 }
 #gradient {
     transition: all 0.3s ease;
 }
+
 .copyHtml {
     display: flex;
     align-items: center;
@@ -131,21 +149,46 @@ button:active {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-.copyIcon {
+
+.icon {
     font-size: 1.5rem;
     margin-left: 0.5rem;
     transition: all 0.3s ease;
     margin-bottom: 0.5rem;
 }
+
 .copyHtml:hover {
     background: var(--fg);
     color: var(--bg);
 }
-.copyHtml:hover .copyIcon {
+
+.copyHtml:hover .copy {
     transform: scale(1.2);
 }
-.copyIcon:active, .copyIcon:focus {
+
+.copy:active,
+.copy:focus {
     scale: 0.6;
     /* padding: 0.5rem; */
 }
+
+@keyframes buttonToggling {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    25% {
+        transform: rotateZ(10deg);
+    }
+    50% {
+        transform: rotateZ(0deg);
+    }
+    75% {
+        transform: rotateZ(-10deg);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+
+
 </style>
